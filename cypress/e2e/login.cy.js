@@ -12,6 +12,7 @@ describe("Login tests", () => {
   const profileNameSelectorMainPage = ".profile-name"
   const profileNameSelectorEditorPage = ".account-nav_profile-name_2oRiV"
   const errorMessage = ".error" //selector for workaround
+  const loadingAnimation = '[alt="loading animation"]'
 
   before(() => {
     cy.visit("/")
@@ -39,8 +40,13 @@ describe("Login tests", () => {
       console.log(
         "Error icon due Login process exist. Application click 'Sign in' button in 2 sec "
       )
-      cy.wait(2000)
+      // wait for animation
+      cy.get(loadingAnimation, { timeout: 5000 }).should('not.exist');
+      //click Sign In button
       cy.get(signInAtUsernamForm).click()
+      // wait for animation
+      cy.get(loadingAnimation, { timeout: 5000 }).should('not.exist');
+
     }
     cy.get(profileNameSelectorMainPage).should("contain", userNameVal)
   })
@@ -68,8 +74,13 @@ describe("Login tests", () => {
       console.log(
         "Error icon due Login process exist. Application click 'Sign in' button in 2 sec "
       )
-      cy.wait(2000)
+      // wait for animation
+      cy.get(loadingAnimation, { timeout: 5000 }).should('not.exist');
+      //click Sign In button
       cy.get(signInAtUsernamForm).click()
+      // wait for animation
+      cy.get(loadingAnimation, { timeout: 5000 }).should('not.exist');
+
     }
 
     cy.get(profileNameSelectorEditorPage).should("contain", userNameVal)
